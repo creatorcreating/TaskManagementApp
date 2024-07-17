@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { AuthProvider } from "./AuthContext";
+import AppNavigator from "./navigation/AppNavigator";
+import * as Notifications from "expo-notifications";
+import { Provider as PaperProvider } from "react-native-paper";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import ThemeToggle from "./components/ThemeToggle";
+// import { firebase } from "./firebase";
+// import {
+//   requestUserPermission,
+//   getFCMToken,
+//   notificationListener,
+// } from "./services/messaging";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+      shouldShowAlert: true,
+    };
   },
 });
+const App: React.FC = () => {
+  useEffect(() => {
+    // requestUserPermission();
+    // getFCMToken();
+    // notificationListener();
+  }, []);
+
+  return (
+    <AuthProvider>
+      <PaperProvider>
+        <AppNavigator />
+      </PaperProvider>
+    </AuthProvider>
+  );
+};
+
+export default App;
